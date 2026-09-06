@@ -1,0 +1,32 @@
+name: Node.js 24 Production CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Fetch your code into the runner
+    - name: Checkout repository code
+      uses: actions/checkout@v4
+
+    # 2. Use the officially supported Node 24 runtime
+    - name: Set up Node.js 24 (LTS)
+      uses: actions/setup-node@v4
+      with:
+        node-version: '24'
+        # Optional: Enables automatic caching for faster builds
+        cache: 'npm' 
+
+    # 3. Clean install your dependencies
+    - name: Install dependencies
+      run: npm ci
+
+    # 4. Execute your test scripts
+    - name: Run tests
+      run: npm test
