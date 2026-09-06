@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="styles/style.css"/>
+<title>JS Runner</title>
+</head>
+<body>
+<div style="display:flex;flex-direction:column;height:100vh;margin:0;font-family:sans-serif;box-sizing:border-box;padding:10px;gap:10px;">
+<textarea id="code" style="flex:1;font-family:monospace;padding:10px;font-size:14px;resize:none;" placeholder="// Write your JavaScript code here...&#10;console.log('Hello World');"></textarea>
+<button onclick="run()" style="padding:10px;font-size:16px;cursor:pointer;background:#007bff;color:#fff;border:none;border-radius:4px;">Run Code</button>
+<pre id="output" style="flex:1;background:#f8f9fa;border:1px solid #ccc;padding:10px;overflow:auto;margin:0;font-family:monospace;white-space:pre-wrap;"></pre>
+</div>
+<script>
+function run(){
+const out=document.getElementById('output');
+out.textContent='';
+const oldLog=console.log;
+console.log=function(...args){
+out.textContent+=args.map(a=>typeof a==='object'?JSON.stringify(a):a).join(' ')+'\n';
+oldLog.apply(console,args);
+};
+try{
+new Function(document.getElementById('code').value)();
+}catch(err){
+out.textContent+='Error: '+err.message+'\n';
+}
+console.log=oldLog;
+}
+</script>
+</body>
+</html>
