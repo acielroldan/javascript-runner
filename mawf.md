@@ -20,7 +20,6 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '24'
-        cache: 'npm'
 
     - name: Install dependencies
       run: npm ci
@@ -29,5 +28,5 @@ jobs:
       run: npm test
 ```
 <Ending>
-Now your workflow is finished!
+Now your workflow is created!
 </Ending>
